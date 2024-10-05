@@ -51,6 +51,9 @@ export default function App() {
       <div className='video-container'>
         <Header />        
         <VideoContainer />
+        <div class="footer">
+            Subscribe to my channel <a href="https://t.me/HypedSimplicity" target="_blank">@HypedSimplicity</a>
+        </div>
       </div>
     </section>
 

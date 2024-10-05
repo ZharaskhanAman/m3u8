@@ -8,6 +8,13 @@ import useModal from '../store/useModal';
 
 let hls = null;
 
+// https://github.com/video-dev/hls.js/blob/master/docs/API.md#fine-tuning
+let config = {
+  debug: true,
+  maxBufferLength: 60 * 30, // a new fragment will be loaded till the buffer length reaches 30 minutes
+  maxMaxBufferLength: 60 * 60 // maximum buffer length is 60 minutes
+}
+
 export default function VideoContainer() {
   const videoRef = useRef();
   const [currentChannel, currentChannelActions] = useCurrentChannel();
@@ -46,7 +53,7 @@ export default function VideoContainer() {
 
     if (currentChannel.type === 'm3u8') {
       if (Hls.isSupported() && currentChannel.type === 'm3u8') {
-        hls = new Hls();
+        hls = new Hls(config);
         hls.loadSource(currentChannel.url);
         hls.attachMedia(video);
         hls.currentLevel = parseInt(currentChannel.qualityIndex, 10);

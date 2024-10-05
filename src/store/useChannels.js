@@ -2,8 +2,7 @@ import { createStore, createHook } from 'react-sweet-state';
 
 const localFavorites = localStorage.getItem('favorites');
 const favorites = localFavorites ? JSON.parse(localFavorites) : [];
-const playlistURL = localStorage.getItem('playlist') || 'https://api.npoint.io/c6ee3f6b723c086b35af';
-// https://bitbucket.org/!api/2.0/snippets/haikel/4Eq4ox/065fea1d6a2a37a229e465450b7d0e473400e129/files/m3u8.txt
+const playlistURL = localStorage.getItem('playlist') || 'https://api.npoint.io/4b35ae4290eeb8271b86';
 
 const Store = createStore({
   initialState: {
