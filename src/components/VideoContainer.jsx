@@ -22,6 +22,11 @@ export default function VideoContainer() {
 
   const onManifestParsed = (_, data) => {
     currentChannelActions.setQualityLevels(data.levels)
+
+    // This seeks to the beginning of the DVR buffer.
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+    }
   }
 
   const onHlsError = (event, data) => {
@@ -64,6 +69,8 @@ export default function VideoContainer() {
       else {
         video.src = currentChannel.url;
         video.addEventListener('canplay', async () => {
+          // This seeks to the beginning before playing.
+          video.currentTime = 0;
           await video.play();
         });
       }
