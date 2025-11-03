@@ -8,11 +8,11 @@ import useModal from '../store/useModal';
 
 let hls = null;
 
-// https://github.com/video-dev/hls.js/blob/master/docs/API.md#fine-tuning
 let config = {
   debug: true,
-  maxBufferLength: 60 * 30, // a new fragment will be loaded till the buffer length reaches 30 minutes
-  maxMaxBufferLength: 60 * 60 // maximum buffer length is 60 minutes
+  maxBufferLength: 60 * 30,
+  maxMaxBufferLength: 60 * 60,
+  startPosition: 0
 }
 
 export default function VideoContainer() {
@@ -22,15 +22,9 @@ export default function VideoContainer() {
 
   const onManifestParsed = (_, data) => {
     currentChannelActions.setQualityLevels(data.levels)
-
-    // This seeks to the beginning of the DVR buffer.
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-    }
   }
 
   const onHlsError = (event, data) => {
-    //console.log('HLS.Events.ERROR: ', event, data);
     if (data.fatal) {
       switch (data.type) {
         case Hls.ErrorTypes.NETWORK_ERROR:
@@ -69,7 +63,6 @@ export default function VideoContainer() {
       else {
         video.src = currentChannel.url;
         video.addEventListener('canplay', async () => {
-          // This seeks to the beginning before playing.
           video.currentTime = 0;
           await video.play();
         });
